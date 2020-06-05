@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import visa
 import sys
@@ -18,29 +18,29 @@ rm = visa.ResourceManager('@py')
 resources = rm.list_resources()
 
 if len(resources) == 0:
-    print >> sys.stderr, 'no devices found'
+    print('no devices found')
     sys.exit(-1)
 
 if args.list:
     for i in resources:
-        print i
+        print(i)
     sys.exit(0)
 
 if args.filename == None:
-    print >> sys.stderr, 'filename must be specified'
+    print('filename must be specified')
     sys.exit(-1)
 
 if args.device == None:
     args.device = resources[0]
 
 if args.verbose:
-    print 'Using device %s.' % args.device
+    print('Using device %s.' % args.device)
 
 
 scope = rm.open_resource(args.device, encoding = 'iso8859-1')
 
 if args.verbose:
-    print 'Device IDN is %s.' % scope.query("*IDN?").strip()
+    print('Device IDN is %s.' % scope.query("*IDN?").strip())
 
 # configure ink saver (black background as seen on screen)
 scope.write(':HARDcopy:INKSaver %u' % args.inksaver)
